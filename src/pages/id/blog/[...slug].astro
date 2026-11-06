@@ -1,0 +1,96 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { id } from '../../../data/id';
+import { blogCopy } from '../../../data/blog';
+import { SITE_URL } from '../../../data/site';
+import { findTranslation, getPublishedPosts, postSlug } from '../../../lib/blog';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts('id');
+
+  return posts.map((post) => ({
+    params: { slug: postSlug(post) },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const copy = blogCopy.id;
+const { Content } = await render(post);
+const path = `/id/blog/${postSlug(post)}/`;
+const canonical = new URL(path, SITE_URL).href;
+const counterpart = await findTranslation(post, 'en');
+
+const counterpartHref = counterpart
+  ? new URL(`/blog/${postSlug(counterpart)}/`, SITE_URL).href
+  : undefined;
+const alternates = [
+  ...(counterpartHref ? [{ hreflang: 'en', href: counterpartHref }] : []),
+  { hreflang: 'id', href: canonical },
+  { hreflang: 'x-default', href: counterpartHref ?? canonical },
+];
+
+const seo = {
+  title: `${post.data.title} — zip4k`,
+  description: post.data.description,
+  ogTitle: post.data.title,
+  ogDescription: post.data.description,
+  ogLocale: id.seo.ogLocale,
+  ogLocaleAlternate: id.seo.ogLocaleAlternate,
+  browserRequirements: id.seo.browserRequirements,
+};
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+    inLanguage: 'id',
+    url: canonical,
+    mainEntityOfPage: canonical,
+    image: new URL('/og.png', SITE_URL).href,
+    publisher: {
+      '@type': 'Organization',
+      name: 'zip4k',
+      url: SITE_URL,
+    },
+  },
+];
+---
+
+<BaseLayout
+  lang="id"
+  path={path}
+  seo={seo}
+  masthead={id.masthead}
+  footer={id.footer}
+  skipLabel={copy.skipLabel}
+  alternates={alternates}
+  schemas={schemas}
+>
+  <article class="post shell section">
+    <p class="section-no">{copy.sectionNo}</p>
+    <h1>{post.data.title}</h1>
+    <p class="post-meta">
+      <time datetime={post.data.pubDate.toISOString()}>
+        {copy.published} {post.data.pubDate.toISOString().slice(0, 10)}
+      </time>
+    </p>
+    <div class="post-body">
+      <Content />
+    </div>
+    <p class="post-back">
+      <a href="/id/blog/">{copy.backToBlog}</a>
+      <span aria-hidden="true"> · </span>
+      <a href="/id/">{copy.backToTool}</a>
+    </p>
+  </article>
+</BaseLayout>

@@ -1,0 +1,100 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { en } from '../../data/en';
+import { blogCopy } from '../../data/blog';
+import { SITE_URL } from '../../data/site';
+import { findTranslation, getPublishedPosts, postSlug } from '../../lib/blog';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts('en');
+
+  return posts.map((post) => ({
+    params: { slug: postSlug(post) },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const copy = blogCopy.en;
+const { Content } = await render(post);
+const path = `/blog/${postSlug(post)}/`;
+const canonical = new URL(path, SITE_URL).href;
+const counterpart = await findTranslation(post, 'id');
+
+const alternates = [
+  { hreflang: 'en', href: canonical },
+  ...(counterpart
+    ? [
+        {
+          hreflang: 'id',
+          href: new URL(`/id/blog/${postSlug(counterpart)}/`, SITE_URL).href,
+        },
+      ]
+    : []),
+  { hreflang: 'x-default', href: canonical },
+];
+
+const seo = {
+  title: `${post.data.title} — zip4k`,
+  description: post.data.description,
+  ogTitle: post.data.title,
+  ogDescription: post.data.description,
+  ogLocale: en.seo.ogLocale,
+  ogLocaleAlternate: en.seo.ogLocaleAlternate,
+  browserRequirements: en.seo.browserRequirements,
+};
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+    inLanguage: 'en',
+    url: canonical,
+    mainEntityOfPage: canonical,
+    image: new URL('/og.png', SITE_URL).href,
+    publisher: {
+      '@type': 'Organization',
+      name: 'zip4k',
+      url: SITE_URL,
+    },
+  },
+];
+---
+
+<BaseLayout
+  lang="en"
+  path={path}
+  seo={seo}
+  masthead={en.masthead}
+  footer={en.footer}
+  skipLabel={copy.skipLabel}
+  alternates={alternates}
+  schemas={schemas}
+>
+  <article class="post shell section">
+    <p class="section-no">{copy.sectionNo}</p>
+    <h1>{post.data.title}</h1>
+    <p class="post-meta">
+      <time datetime={post.data.pubDate.toISOString()}>
+        {copy.published} {post.data.pubDate.toISOString().slice(0, 10)}
+      </time>
+    </p>
+    <div class="post-body">
+      <Content />
+    </div>
+    <p class="post-back">
+      <a href="/blog/">{copy.backToBlog}</a>
+      <span aria-hidden="true"> · </span>
+      <a href="/">{copy.backToTool}</a>
+    </p>
+  </article>
+</BaseLayout>

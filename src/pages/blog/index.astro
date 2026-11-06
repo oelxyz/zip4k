@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { en } from '../../data/en';
+import { blogCopy } from '../../data/blog';
+import { SITE_URL } from '../../data/site';
+import { getPublishedPosts, postSlug } from '../../lib/blog';
+
+const copy = blogCopy.en;
+const posts = await getPublishedPosts('en');
+
+const alternates = [
+  { hreflang: 'en', href: new URL('/blog/', SITE_URL).href },
+  { hreflang: 'id', href: new URL('/id/blog/', SITE_URL).href },
+  { hreflang: 'x-default', href: new URL('/blog/', SITE_URL).href },
+];
+
+const seo = {
+  title: copy.seoTitle,
+  description: copy.seoDescription,
+  ogTitle: copy.seoTitle,
+  ogDescription: copy.seoDescription,
+  ogLocale: en.seo.ogLocale,
+  ogLocaleAlternate: en.seo.ogLocaleAlternate,
+  browserRequirements: en.seo.browserRequirements,
+};
+---
+
+<BaseLayout
+  lang="en"
+  path="/blog/"
+  seo={seo}
+  masthead={en.masthead}
+  footer={en.footer}
+  skipLabel={copy.skipLabel}
+  alternates={alternates}
+  noindex={posts.length === 0}
+>
+  <section class="section shell" aria-labelledby="blog-title">
+    <div class="section-head">
+      <p class="section-no">{copy.sectionNo}</p>
+      <h1 id="blog-title">{copy.title}</h1>
+    </div>
+
+    {
+      posts.length === 0 ? (
+        <p class="prose">{copy.empty}</p>
+      ) : (
+        <ul class="post-list">
+          {posts.map((post) => (
+            <li>
+              <a class="post-link" href={`/blog/${postSlug(post)}/`}>
+                <div class="post-summary">
+                  <h2>{post.data.title}</h2>
+                  <p>{post.data.description}</p>
+                </div>
+                <div class="post-aside">
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {post.data.pubDate.toISOString().slice(0, 10)}
+                  </time>
+                  <span class="post-more">{copy.readMore} →</span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <p class="post-back"><a href="/">{copy.backToTool}</a></p>
+  </section>
+</BaseLayout>

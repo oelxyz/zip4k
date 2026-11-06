@@ -1,0 +1,88 @@
+---
+import '../styles/global.css';
+import Masthead from '../components/Masthead.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_URL } from '../data/site';
+import type { FooterContent, Lang, MastheadContent, SeoContent } from '../data/types';
+
+interface Props {
+  lang: Lang;
+  path: string;
+  seo: SeoContent;
+  masthead: MastheadContent;
+  footer: FooterContent;
+  skipLabel: string;
+  skipHref?: string;
+  alternates: Array<{ hreflang: string; href: string }>;
+  schemas?: object[];
+  noindex?: boolean;
+}
+
+const {
+  lang,
+  path,
+  seo,
+  masthead,
+  footer,
+  skipLabel,
+  skipHref = '#main-content',
+  alternates,
+  schemas = [],
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(path, SITE_URL).href;
+const ogImage = new URL('/og.png', SITE_URL).href;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <meta name="theme-color" content="#f6f2e9" />
+    <meta name="robots" content={noindex ? 'noindex,follow' : 'index,follow'} />
+    <link rel="canonical" href={canonical} />
+    {
+      alternates.map((alternate) => (
+        <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
+      ))
+    }
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="zip4k" />
+    <meta property="og:title" content={seo.ogTitle} />
+    <meta property="og:description" content={seo.ogDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={seo.ogLocale} />
+    <meta property="og:locale:alternate" content={seo.ogLocaleAlternate} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={seo.ogTitle} />
+    <meta name="twitter:description" content={seo.ogDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {
+      schemas.map((schema) => (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(schema).replace(/</g, '\\u003c')}
+        />
+      ))
+    }
+  </head>
+  <body>
+    <a class="skip-link" href={skipHref}>{skipLabel}</a>
+    <Masthead lang={lang} {...masthead} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer {...footer} />
+  </body>
+</html>

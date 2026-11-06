@@ -1,0 +1,20 @@
+---
+interface Props {
+  note: string;
+  meta: string[];
+  blogHref: string;
+  blogLabel: string;
+}
+
+const { note, meta, blogHref, blogLabel } = Astro.props;
+---
+
+<footer class="footer shell">
+  <p>{note}</p>
+  <div class="footer-side">
+    <p class="footer-meta">
+      {meta.map((item) => <span>{item}</span>)}
+    </p>
+    <a class="footer-link" href={blogHref}>{blogLabel}</a>
+  </div>
+</footer>

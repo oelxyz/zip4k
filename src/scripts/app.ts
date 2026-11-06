@@ -1,6 +1,5 @@
-import './styles.css';
 import { ImageDecodeError, formatBytes, processImage, type Stage } from './processor';
-import { getLang, getTranslator, type MessageKey } from './i18n';
+import { getLang, getTranslator, type MessageKey } from './ui-strings';
 
 const t = getTranslator(getLang());
 

@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Tool from './Tool.astro';
+import { SITE_URL } from '../data/site';
+import type { HomeContent } from '../data/types';
+
+interface Props {
+  content: HomeContent;
+}
+
+const { content } = Astro.props;
+
+const alternates = [
+  { hreflang: 'en', href: new URL('/', SITE_URL).href },
+  { hreflang: 'id', href: new URL('/id/', SITE_URL).href },
+  { hreflang: 'x-default', href: new URL('/', SITE_URL).href },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'zip4k',
+    url: new URL(content.path, SITE_URL).href,
+    description: content.seo.description,
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any',
+    browserRequirements: content.seo.browserRequirements,
+    inLanguage: ['en', 'id'],
+    isAccessibleForFree: true,
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    featureList: content.hero.tags,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: content.faq.items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  lang={content.lang}
+  path={content.path}
+  seo={content.seo}
+  masthead={content.masthead}
+  footer={content.footer}
+  skipLabel={content.skipLabel}
+  skipHref="#tool"
+  alternates={alternates}
+  schemas={schemas}
+>
+  <section class="hero shell" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="kicker">{content.hero.kicker}</p>
+      <h1 id="hero-title">{content.hero.headlines[0]}<br />{content.hero.headlines[1]}</h1>
+      <p class="lede">{content.hero.lede}</p>
+      <ul class="hero-tags" role="list">
+        {content.hero.tags.map((tag) => <li>{tag}</li>)}
+      </ul>
+    </div>
+
+    <aside class="spec-card" aria-label={content.hero.outputLabel}>
+      <p class="spec-label">{content.hero.outputLabel}</p>
+      <dl class="spec-list">
+        {
+          content.hero.specs.map((spec) => (
+            <div>
+              <dt>{spec.label}</dt>
+              <dd>{spec.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </aside>
+  </section>
+
+  <Tool tool={content.tool} />
+
+  <section class="section shell" aria-labelledby="how-title">
+    <div class="section-head">
+      <p class="section-no">{content.how.sectionNo}</p>
+      <h2 id="how-title">{content.how.title}</h2>
+    </div>
+    <ol class="steps">
+      {
+        content.how.steps.map((step, index) => (
+          <li>
+            <span class="step-no">{index + 1}</span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="section shell" aria-labelledby="spec-title">
+    <div class="section-head">
+      <p class="section-no">{content.spec.sectionNo}</p>
+      <h2 id="spec-title">{content.spec.title}</h2>
+    </div>
+    <table class="spec-table">
+      <tbody>
+        {
+          content.spec.rows.map((row) => (
+            <tr>
+              <th scope="row">{row.label}</th>
+              <td set:html={row.html} />
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section shell" aria-labelledby="faq-title">
+    <div class="section-head">
+      <p class="section-no">{content.faq.sectionNo}</p>
+      <h2 id="faq-title">{content.faq.title}</h2>
+    </div>
+    <div class="faq">
+      {
+        content.faq.items.map((item) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section shell" aria-labelledby="quality-title">
+    <div class="section-head">
+      <p class="section-no">{content.quality.sectionNo}</p>
+      <h2 id="quality-title">{content.quality.title}</h2>
+    </div>
+    <p class="prose">{content.quality.body}</p>
+  </section>
+</BaseLayout>

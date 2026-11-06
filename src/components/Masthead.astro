@@ -1,0 +1,40 @@
+---
+import type { Lang } from '../data/types';
+
+interface Props {
+  lang: Lang;
+  homeLabel: string;
+  note: string;
+  languageLabel: string;
+}
+
+const { lang, homeLabel, note, languageLabel } = Astro.props;
+const homeHref = lang === 'id' ? '/id/' : '/';
+---
+
+<header class="masthead shell">
+  <a class="brand" href={homeHref} aria-label={homeLabel}
+    >zip4k<span class="brand-dot" aria-hidden="true"></span></a
+  >
+  <p class="brand-note">{note}</p>
+  <nav class="lang-switch" aria-label={languageLabel}>
+    {
+      lang === 'id' ? (
+        <a href="/" hreflang="en" lang="en">
+          EN
+        </a>
+      ) : (
+        <span aria-current="true">EN</span>
+      )
+    }
+    {
+      lang === 'id' ? (
+        <span aria-current="true">ID</span>
+      ) : (
+        <a href="/id/" hreflang="id" lang="id">
+          ID
+        </a>
+      )
+    }
+  </nav>
+</header>

@@ -1,0 +1,53 @@
+---
+import type { ToolContent } from '../data/types';
+
+interface Props {
+  tool: ToolContent;
+}
+
+const { tool } = Astro.props;
+---
+
+<section class="tool section shell" id="tool" aria-labelledby="tool-title">
+  <div class="section-head">
+    <p class="section-no">{tool.sectionNo}</p>
+    <h2 id="tool-title">{tool.title}</h2>
+  </div>
+
+  <div class="tool-panel">
+    <button class="dropzone" type="button" id="dropzone" aria-describedby="drop-hint">
+      <svg
+        class="dropzone-mark"
+        width="26"
+        height="26"
+        viewBox="0 0 26 26"
+        fill="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M13 2v22M2 13h22" stroke="currentColor" stroke-width="1.5"></path>
+      </svg>
+      <span class="dropzone-title">{tool.dropTitle}</span>
+      <span class="dropzone-hint" id="drop-hint">{tool.dropHint}</span>
+    </button>
+    <input type="file" id="file-input" accept="image/*" multiple hidden />
+
+    <div class="queue">
+      <div class="queue-head">
+        <h3>{tool.queueLabel} <span class="queue-count" id="queue-count">(0)</span></h3>
+        <div class="queue-actions">
+          <button type="button" class="btn btn-ghost" id="download-all" disabled>{tool.downloadAll}</button>
+          <button type="button" class="btn btn-ghost" id="clear" disabled>{tool.clear}</button>
+        </div>
+      </div>
+      <p class="queue-empty" id="queue-empty">{tool.empty}</p>
+      <ul class="file-list" id="file-list" aria-live="polite"></ul>
+    </div>
+
+    <p class="memory-note">{tool.memoryNote}</p>
+  </div>
+</section>
+
+<script>
+  import '../scripts/app';
+</script>
