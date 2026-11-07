@@ -20,6 +20,14 @@ const queueEmpty = must<HTMLParagraphElement>('#queue-empty');
 const queueCount = must<HTMLSpanElement>('#queue-count');
 const downloadAllButton = must<HTMLButtonElement>('#download-all');
 const clearButton = must<HTMLButtonElement>('#clear');
+const finishInputs = Array.from(
+  document.querySelectorAll<HTMLInputElement>('input[name="finish"]'),
+);
+
+function wantsSharpening(): boolean {
+  const selected = finishInputs.find((input) => input.checked);
+  return selected ? selected.value === 'crisp' : true;
+}
 
 const stageLabels: Record<Stage, MessageKey> = {
   decode: 'statusDecode',
@@ -128,7 +136,7 @@ async function pump() {
       setState(item, 'processing', t('statusDecode'));
 
       try {
-        const result = await processImage(item.file, (stage, info) => {
+        const result = await processImage(item.file, { sharpening: wantsSharpening() }, (stage, info) => {
           if (item.generation !== generation) {
             return;
           }
@@ -148,6 +156,7 @@ async function pump() {
 
         const url = URL.createObjectURL(result.zipBlob);
         item.zipUrl = url;
+        item.row.dataset.engine = result.engine;
 
         setState(item, 'done', t('statusDone'));
         item.meta.textContent = t('metaReady', {

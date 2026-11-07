@@ -45,6 +45,11 @@ export const en: HomeContent = {
     empty: 'No images yet. Add a few landscape photos to begin.',
     memoryNote:
       'Images are processed one at a time. On mobile, keep batches small — 4K PNG files need a lot of memory.',
+    finishLabel: 'Finish',
+    finishHint:
+      'Lanczos resampling. Crisp adds subtle edge sharpening; no detail is invented.',
+    finishNatural: 'Natural',
+    finishCrisp: 'Crisp',
   },
   how: {
     sectionNo: '02',
@@ -56,7 +61,7 @@ export const en: HomeContent = {
       },
       {
         title: 'Center-crop and resize',
-        body: "Each image is trimmed evenly to 16:9, then rendered at exactly 3840 × 2160 using the browser's high-quality interpolation.",
+        body: 'Each image is trimmed evenly to 16:9, then resampled to exactly 3840 × 2160 with a Lanczos filter in WebGL.',
       },
       {
         title: 'Download one ZIP per image',
@@ -73,7 +78,10 @@ export const en: HomeContent = {
       { label: 'File format', html: 'PNG, opaque' },
       { label: 'Packaging', html: 'One ZIP archive per source image' },
       { label: 'Inside the ZIP', html: 'One PNG named <code>original-name-3840x2160.png</code>' },
-      { label: 'Upscaling', html: 'Browser high-quality interpolation (no AI)' },
+      {
+        label: 'Upscaling',
+        html: 'Lanczos resampling in WebGL, optional light sharpening (no AI)',
+      },
       { label: 'Cost', html: 'Free, no account' },
       { label: 'Privacy', html: 'Processed locally in your browser' },
     ],
@@ -115,7 +123,7 @@ export const en: HomeContent = {
   quality: {
     sectionNo: '05',
     title: 'A note on quality',
-    body: "zip4k resizes with the browser's high-quality interpolation. A 1080p or larger source usually holds up at 4K; very small sources will look soft. No detail is invented — there is no AI in the pipeline.",
+    body: 'zip4k resamples with a Lanczos filter in WebGL for cleaner edges than basic browser scaling, with an optional light unsharp mask. Neither invents detail: a 1080p or larger source usually holds up at 4K; very small sources will still look soft. There is no AI in the pipeline.',
   },
   footer: {
     note: 'zip4k is an independent utility for stock contributors. Not affiliated with PNGTree.',

@@ -3,7 +3,7 @@ export type Lang = 'en' | 'id';
 const en = {
   statusQueued: 'Queued',
   statusDecode: 'Reading image…',
-  statusRender: 'Cropping and resizing…',
+  statusRender: 'Resampling to 4K…',
   statusEncode: 'Encoding PNG…',
   statusZip: 'Packing ZIP…',
   statusDone: 'Ready',
@@ -22,7 +22,7 @@ export type MessageKey = keyof typeof en;
 const id: Record<MessageKey, string> = {
   statusQueued: 'Menunggu',
   statusDecode: 'Membaca gambar…',
-  statusRender: 'Memotong dan mengubah ukuran…',
+  statusRender: 'Meresampling ke 4K…',
   statusEncode: 'Meng-encode PNG…',
   statusZip: 'Membuat ZIP…',
   statusDone: 'Siap',

@@ -45,6 +45,11 @@ export const id: HomeContent = {
     empty: 'Belum ada gambar. Tambahkan beberapa foto landscape untuk memulai.',
     memoryNote:
       'Gambar diproses satu per satu. Di ponsel, jaga batch tetap kecil — file PNG 4K membutuhkan memori besar.',
+    finishLabel: 'Hasil akhir',
+    finishHint:
+      'Resampling Lanczos. Tegas menambahkan penajaman tepi halus; tidak ada detail yang dikarang.',
+    finishNatural: 'Natural',
+    finishCrisp: 'Tegas',
   },
   how: {
     sectionNo: '02',
@@ -56,7 +61,7 @@ export const id: HomeContent = {
       },
       {
         title: 'Potong tengah dan ubah ukuran',
-        body: 'Setiap gambar dipangkas merata ke 16:9, lalu dirender tepat 3840 × 2160 dengan interpolasi kualitas tinggi dari browser.',
+        body: 'Setiap gambar dipangkas merata ke 16:9, lalu di-resample tepat 3840 × 2160 dengan filter Lanczos di WebGL.',
       },
       {
         title: 'Unduh satu ZIP per gambar',
@@ -73,7 +78,10 @@ export const id: HomeContent = {
       { label: 'Format file', html: 'PNG, opaque' },
       { label: 'Kemasan', html: 'Satu arsip ZIP per gambar sumber' },
       { label: 'Isi ZIP', html: 'Satu PNG bernama <code>nama-asli-3840x2160.png</code>' },
-      { label: 'Upscaling', html: 'Interpolasi kualitas tinggi browser (tanpa AI)' },
+      {
+        label: 'Upscaling',
+        html: 'Resampling Lanczos di WebGL, penajaman ringan opsional (tanpa AI)',
+      },
       { label: 'Biaya', html: 'Gratis, tanpa akun' },
       { label: 'Privasi', html: 'Diproses lokal di browser Anda' },
     ],
@@ -116,7 +124,7 @@ export const id: HomeContent = {
   quality: {
     sectionNo: '05',
     title: 'Catatan kualitas',
-    body: 'zip4k mengubah ukuran dengan interpolasi kualitas tinggi bawaan browser. Sumber 1080p atau lebih besar biasanya tetap layak di 4K; sumber yang sangat kecil akan terlihat lembut. Tidak ada detail yang diciptakan — tidak ada AI dalam prosesnya.',
+    body: 'zip4k me-resample dengan filter Lanczos di WebGL untuk tepi yang lebih bersih dibanding penskalaan browser biasa, dengan unsharp mask ringan opsional. Keduanya tidak mengarang detail: sumber 1080p atau lebih besar biasanya tetap layak di 4K; sumber yang sangat kecil tetap akan terlihat lembut. Tidak ada AI dalam prosesnya.',
   },
   footer: {
     note: 'zip4k adalah alat independen untuk kontributor stok. Tidak berafiliasi dengan PNGTree.',

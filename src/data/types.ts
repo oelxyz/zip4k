@@ -35,6 +35,10 @@ export interface ToolContent {
   clear: string;
   empty: string;
   memoryNote: string;
+  finishLabel: string;
+  finishHint: string;
+  finishNatural: string;
+  finishCrisp: string;
 }
 
 export interface StepItem {

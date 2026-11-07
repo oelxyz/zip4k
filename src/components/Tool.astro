@@ -32,6 +32,23 @@ const { tool } = Astro.props;
     </button>
     <input type="file" id="file-input" accept="image/*" multiple hidden />
 
+    <div class="finish">
+      <div class="finish-copy">
+        <p class="finish-label">{tool.finishLabel}</p>
+        <p class="finish-hint">{tool.finishHint}</p>
+      </div>
+      <div class="finish-options" role="group" aria-label={tool.finishLabel}>
+        <label class="finish-option">
+          <input type="radio" name="finish" value="natural" />
+          <span>{tool.finishNatural}</span>
+        </label>
+        <label class="finish-option">
+          <input type="radio" name="finish" value="crisp" checked />
+          <span>{tool.finishCrisp}</span>
+        </label>
+      </div>
+    </div>
+
     <div class="queue">
       <div class="queue-head">
         <h3>{tool.queueLabel} <span class="queue-count" id="queue-count">(0)</span></h3>
