@@ -1,20 +1,36 @@
 ---
 interface Props {
   note: string;
+  openSourcePrefix: string;
+  githubRepoHref: string;
+  githubRepoLabel: string;
+  openSourceSeparator: string;
+  githubProfileHref: string;
+  githubProfileLabel: string;
+  credit: string;
   meta: string[];
-  blogHref: string;
-  blogLabel: string;
 }
 
-const { note, meta, blogHref, blogLabel } = Astro.props;
+const { note, openSourcePrefix, githubRepoHref, githubRepoLabel, openSourceSeparator, githubProfileHref, githubProfileLabel, credit, meta } = Astro.props;
 ---
 
 <footer class="footer shell">
-  <p>{note}</p>
+  <div class="footer-main">
+    <a class="footer-brand" href="/">zip4k<span aria-hidden="true">.</span></a>
+    <p class="footer-note">{note}</p>
+    <p class="footer-note">{credit}</p>
+  </div>
   <div class="footer-side">
-    <p class="footer-meta">
-      {meta.map((item) => <span>{item}</span>)}
-    </p>
-    <a class="footer-link" href={blogHref}>{blogLabel}</a>
+    <div class="footer-meta-block">
+      <p class="footer-meta">
+        {meta.map((item) => <span>{item}</span>)}
+      </p>
+      <p class="footer-note">
+        {openSourcePrefix}
+        <a href={githubRepoHref} target="_blank" rel="noopener noreferrer">{githubRepoLabel}</a>
+        {openSourceSeparator}
+        <a href={githubProfileHref} target="_blank" rel="noopener noreferrer">{githubProfileLabel}</a>
+      </p>
+    </div>
   </div>
 </footer>

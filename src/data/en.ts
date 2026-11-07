@@ -5,34 +5,33 @@ export const en: HomeContent = {
   path: '/',
   skipLabel: 'Skip to the tool',
   seo: {
-    title: 'zip4k — Resize landscape images to 3840×2160 PNG + ZIP per file',
+    title: 'zip4k — PNGTree 4K ZIP ready: landscape images to 3840×2160 PNG per ZIP',
     description:
-      'Center-crop landscape images to 16:9, resize to exactly 3840×2160, export PNG, and download one ready-to-upload ZIP per image. No upload, no AI.',
-    ogTitle: 'zip4k — Landscape images to 3840×2160, one ZIP per file',
+      'For PNGTree contributors: center-crop landscape images to 16:9, resize to exactly 3840×2160, export PNG, and download one ready-to-upload ZIP per image. Independent tool, not affiliated with PNGTree. No upload, no AI.',
+    ogTitle: 'zip4k — PNGTree-ready 4K landscape packages, one ZIP per image',
     ogDescription:
-      'Center-crop to 16:9, resize to exactly 3840×2160, export PNG, and download one ready-to-upload ZIP per image. Runs entirely in your browser.',
+      'Center-crop to 16:9, resize to exactly 3840×2160, export PNG, and download one ready-to-upload ZIP per image for PNGTree. Runs locally in your browser.',
     ogLocale: 'en_US',
     ogLocaleAlternate: 'id_ID',
-    browserRequirements: 'Requires a modern browser with Canvas 2D support',
+    browserRequirements: 'Requires a modern browser with WebGL2 or Canvas 2D support',
   },
   masthead: {
     homeLabel: 'zip4k home',
     note: 'landscape → 3840×2160',
+    blogHref: '/blog/',
+    blogLabel: 'Blog',
     languageLabel: 'Language',
+    themeLabel: 'Switch light or dark mode',
   },
   hero: {
-    kicker: 'Batch utility for stock contributors',
+    kicker: 'Independent utility for PNGTree contributors',
     headlines: ['Landscape images to 4K.', 'One ZIP per file.'],
-    lede: 'Center-crop any landscape photo to 16:9, resize it to exactly 3840 × 2160, export PNG, and get a ZIP that is ready to upload. Everything runs in your browser.',
+    lede: 'zip4k centers landscape photos to 16:9, resamples them to exactly 3840 × 2160, and packages each PNG in its own ZIP for PNGTree upload. Nothing is uploaded to a server.',
     tags: ['No upload', 'No AI', 'PNG output', 'ZIP per image'],
-    outputLabel: 'Output',
-    specs: [
-      { label: 'Resolution', value: '3840 × 2160' },
-      { label: 'Aspect', value: '16 : 9' },
-      { label: 'Format', value: 'PNG' },
-      { label: 'Packaging', value: '1 ZIP / image' },
-      { label: 'Processing', value: 'On your device' },
-    ],
+    demoLabel: 'Live resample demo',
+    demoStatus: '3840×2160 · 16:9',
+    demoCopy:
+      'Center crop keeps the composition intact. The result is a standard PNGTree-ready ZIP: source image, exact 4K frame, and Lanczos sampling.',
   },
   tool: {
     sectionNo: '01',
@@ -82,6 +81,10 @@ export const en: HomeContent = {
         label: 'Upscaling',
         html: 'Lanczos resampling in WebGL, optional light sharpening (no AI)',
       },
+      {
+        label: 'PNGTree upload check',
+        html: 'Landscape ratio is normalized to 16:9; output is exactly 4K and delivered as one ZIP per image.',
+      },
       { label: 'Cost', html: 'Free, no account' },
       { label: 'Privacy', html: 'Processed locally in your browser' },
     ],
@@ -98,13 +101,19 @@ export const en: HomeContent = {
       {
         question: 'Does zip4k use AI to upscale?',
         answer:
-          "No. It relies on the browser's own high-quality interpolation. Sources at 1080p or higher usually look clean at 4K; very small sources can look soft.",
+          'No. It uses Lanczos resampling in WebGL with an optional light unsharp mask; detail is not invented. Sources at 1080p or higher usually look clean at 4K; very small sources can look soft.',
       },
       {
         question: 'What happens to photos that are not 16:9?',
         answer:
           'They are center-cropped to 16:9 before resizing. Equal amounts are trimmed from the left and right, or from the top and bottom, depending on the original ratio.',
       },
+      {
+        question: 'Is this an official PNGTree tool?',
+        answer:
+          'No. zip4k is independent and not affiliated with PNGTree. It prepares the image packages that contributors later upload to PNGTree.',
+      },
+
       {
         question: 'Is the output exactly 3840 × 2160?',
         answer: 'Yes. Every PNG is rendered at exactly 3840 × 2160 pixels.',
@@ -121,14 +130,19 @@ export const en: HomeContent = {
     ],
   },
   quality: {
-    sectionNo: '05',
-    title: 'A note on quality',
-    body: 'zip4k resamples with a Lanczos filter in WebGL for cleaner edges than basic browser scaling, with an optional light unsharp mask. Neither invents detail: a 1080p or larger source usually holds up at 4K; very small sources will still look soft. There is no AI in the pipeline.',
+    sectionNo: '',
+    title: 'PNGTree upload checklist',
+    body: 'Before upload, zip4k gives contributors a deterministic package: centered 16:9 composition, exact 3840 × 2160 PNG, one ZIP per image, and local processing without account or AI. Lanczos sampling keeps edges clean; it does not invent detail, so verify the source resolution before submitting.',
   },
   footer: {
-    note: 'zip4k is an independent utility for stock contributors. Not affiliated with PNGTree.',
+    note: 'zip4k is an independent utility for PNGTree contributors. Not affiliated with PNGTree.',
+    openSourcePrefix: 'Open source · MIT · Enhanced by ',
+    githubRepoHref: 'https://github.com/oelxyz/zip4k',
+    githubRepoLabel: 'GitHub repo',
+    openSourceSeparator: ' · ',
+    githubProfileHref: 'https://github.com/oelxyz',
+    githubProfileLabel: '@oelxyz',
+    credit: 'Typography: Fraunces · Literata · Plus Jakarta Sans',
     meta: ['3840 × 2160', 'PNG', 'ZIP per image'],
-    blogHref: '/blog/',
-    blogLabel: 'Blog',
   },
 };

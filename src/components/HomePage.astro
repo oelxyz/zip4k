@@ -64,25 +64,24 @@ const schemas = [
   <section class="hero shell" aria-labelledby="hero-title">
     <div class="hero-copy">
       <p class="kicker">{content.hero.kicker}</p>
-      <h1 id="hero-title">{content.hero.headlines[0]}<br />{content.hero.headlines[1]}</h1>
+      <h1 id="hero-title">{content.hero.headlines[0]}<br /><strong>{content.hero.headlines[1]}</strong></h1>
       <p class="lede">{content.hero.lede}</p>
       <ul class="hero-tags" role="list">
         {content.hero.tags.map((tag) => <li>{tag}</li>)}
       </ul>
     </div>
 
-    <aside class="spec-card" aria-label={content.hero.outputLabel}>
-      <p class="spec-label">{content.hero.outputLabel}</p>
-      <dl class="spec-list">
-        {
-          content.hero.specs.map((spec) => (
-            <div>
-              <dt>{spec.label}</dt>
-              <dd>{spec.value}</dd>
-            </div>
-          ))
-        }
-      </dl>
+    <aside class="resample-panel" aria-label={content.hero.demoLabel}>
+      <div class="resample-head">
+        <span>{content.hero.demoLabel}</span>
+        <output>{content.hero.demoStatus}</output>
+      </div>
+      <div class="resample-preview">
+        <img src="/test-landscape.png" alt="" width="2400" height="1600" loading="eager" />
+        <span class="resample-grid" aria-hidden="true"></span>
+        <span class="resample-scanline" aria-hidden="true"></span>
+      </div>
+      <p class="resample-copy" set:html={content.hero.demoCopy} />
     </aside>
   </section>
 
@@ -146,7 +145,7 @@ const schemas = [
 
   <section class="section shell" aria-labelledby="quality-title">
     <div class="section-head">
-      <p class="section-no">{content.quality.sectionNo}</p>
+      {content.quality.sectionNo && <p class="section-no">{content.quality.sectionNo}</p>}
       <h2 id="quality-title">{content.quality.title}</h2>
     </div>
     <p class="prose">{content.quality.body}</p>

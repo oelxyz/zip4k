@@ -13,7 +13,10 @@ export interface SeoContent {
 export interface MastheadContent {
   homeLabel: string;
   note: string;
+  blogHref: string;
+  blogLabel: string;
   languageLabel: string;
+  themeLabel: string;
 }
 
 export interface HeroContent {
@@ -21,9 +24,13 @@ export interface HeroContent {
   headlines: [string, string];
   lede: string;
   tags: string[];
-  outputLabel: string;
-  specs: Array<{ label: string; value: string }>;
+  demoLabel: string;
+  demoStatus: string;
+  demoCopy: string;
 }
+
+// kept for existing lookup types/indexing
+
 
 export interface ToolContent {
   sectionNo: string;
@@ -58,9 +65,14 @@ export interface FaqItem {
 
 export interface FooterContent {
   note: string;
+  openSourcePrefix: string;
+  githubRepoHref: string;
+  githubRepoLabel: string;
+  openSourceSeparator: string;
+  githubProfileHref: string;
+  githubProfileLabel: string;
+  credit: string;
   meta: string[];
-  blogHref: string;
-  blogLabel: string;
 }
 
 export interface HomeContent {

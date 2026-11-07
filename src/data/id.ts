@@ -5,34 +5,33 @@ export const id: HomeContent = {
   path: '/id/',
   skipLabel: 'Lewati ke alat',
   seo: {
-    title: 'zip4k — Ubah gambar landscape ke 3840×2160, PNG + ZIP per file',
+    title: 'zip4k — Siap ZIP 4K PNGTree: gambar landscape ke 3840×2160 PNG per ZIP',
     description:
-      'Potong gambar landscape ke 16:9, ubah ukuran ke tepat 3840×2160, ekspor PNG, dan unduh satu ZIP siap unggah per gambar. Tanpa unggah, tanpa AI.',
-    ogTitle: 'zip4k — Gambar landscape jadi 3840×2160, satu ZIP per file',
+      'Untuk kontributor PNGTree: potong gambar landscape ke 16:9, ubah ukuran ke tepat 3840×2160, ekspor PNG, dan unduh satu ZIP siap unggah per gambar. Alat independen, tidak berafiliasi dengan PNGTree. Tanpa unggah, tanpa AI.',
+    ogTitle: 'zip4k — Paket landscape 4K siap PNGTree, satu ZIP per gambar',
     ogDescription:
-      'Potong tengah ke 16:9, ubah ukuran ke tepat 3840×2160, ekspor PNG, dan unduh satu ZIP siap unggah per gambar. Berjalan sepenuhnya di browser.',
+      'Potong tengah ke 16:9, ubah ukuran ke tepat 3840×2160, ekspor PNG, dan unduh satu ZIP siap unggah per gambar untuk PNGTree. Berjalan lokal di browser.',
     ogLocale: 'id_ID',
     ogLocaleAlternate: 'en_US',
-    browserRequirements: 'Membutuhkan browser modern dengan dukungan Canvas 2D',
+    browserRequirements: 'Membutuhkan browser modern dengan dukungan WebGL2 atau Canvas 2D',
   },
   masthead: {
     homeLabel: 'Beranda zip4k',
     note: 'landscape → 3840×2160',
+    blogHref: '/id/blog/',
+    blogLabel: 'Blog',
     languageLabel: 'Bahasa',
+    themeLabel: 'Ganti mode terang atau gelap',
   },
   hero: {
-    kicker: 'Alat batch untuk kontributor stok',
+    kicker: 'Alat independen untuk kontributor PNGTree',
     headlines: ['Gambar landscape jadi 4K.', 'Satu ZIP per file.'],
-    lede: 'Potong foto landscape ke tengah dengan rasio 16:9, ubah ukurannya ke tepat 3840 × 2160, ekspor PNG, lalu unduh ZIP yang siap diunggah. Semua proses berjalan di browser Anda.',
+    lede: 'zip4k memusatkan foto landscape ke 16:9, me-resample ke tepat 3840 × 2160, dan mengemas setiap PNG dalam ZIP sendiri untuk diunggah ke PNGTree. Tidak ada berkas yang diunggah ke server.',
     tags: ['Tanpa unggah', 'Tanpa AI', 'Output PNG', 'ZIP per gambar'],
-    outputLabel: 'Keluaran',
-    specs: [
-      { label: 'Resolusi', value: '3840 × 2160' },
-      { label: 'Rasio', value: '16 : 9' },
-      { label: 'Format', value: 'PNG' },
-      { label: 'Kemasan', value: '1 ZIP / gambar' },
-      { label: 'Proses', value: 'Di perangkat Anda' },
-    ],
+    demoLabel: 'Demo resample langsung',
+    demoStatus: '3840×2160 · 16:9',
+    demoCopy:
+      'Potong tengah menjaga komposisi tetap utuh. Hasilnya adalah ZIP standar siap PNGTree: gambar sumber, bingkai 4K tepat, dan sampling Lanczos.',
   },
   tool: {
     sectionNo: '01',
@@ -82,6 +81,10 @@ export const id: HomeContent = {
         label: 'Upscaling',
         html: 'Resampling Lanczos di WebGL, penajaman ringan opsional (tanpa AI)',
       },
+      {
+        label: 'Cek unggah PNGTree',
+        html: 'Rasio landscape dinormalisasi ke 16:9; keluaran tepat 4K dan dikirim sebagai satu ZIP per gambar.',
+      },
       { label: 'Biaya', html: 'Gratis, tanpa akun' },
       { label: 'Privasi', html: 'Diproses lokal di browser Anda' },
     ],
@@ -98,13 +101,19 @@ export const id: HomeContent = {
       {
         question: 'Apakah zip4k memakai AI untuk upscale?',
         answer:
-          'Tidak. Prosesnya memakai interpolasi kualitas tinggi bawaan browser. Sumber 1080p atau lebih biasanya tetap tajam di 4K; sumber yang sangat kecil bisa terlihat lembut.',
+          'Tidak. Prosesnya memakai resampling Lanczos di WebGL dengan unsharp mask ringan opsional; tidak ada detail yang dikarang. Sumber 1080p atau lebih biasanya tetap bersih di 4K; sumber yang sangat kecil bisa terlihat lembut.',
       },
       {
         question: 'Bagaimana foto yang bukan 16:9?',
         answer:
           'Foto dipotong di tengah ke rasio 16:9 sebelum diubah ukurannya. Bagian yang dipangkas sama banyak dari kiri dan kanan, atau dari atas dan bawah, tergantung rasio aslinya.',
       },
+      {
+        question: 'Apakah ini alat resmi PNGTree?',
+        answer:
+          'Bukan. zip4k bersifat independen dan tidak berafiliasi dengan PNGTree. Alat ini menyiapkan paket gambar yang kemudian diunggah kontributor ke PNGTree.',
+      },
+
       {
         question: 'Apakah hasilnya tepat 3840 × 2160?',
         answer: 'Ya. Setiap PNG dirender tepat 3840 × 2160 piksel.',
@@ -122,14 +131,19 @@ export const id: HomeContent = {
     ],
   },
   quality: {
-    sectionNo: '05',
-    title: 'Catatan kualitas',
-    body: 'zip4k me-resample dengan filter Lanczos di WebGL untuk tepi yang lebih bersih dibanding penskalaan browser biasa, dengan unsharp mask ringan opsional. Keduanya tidak mengarang detail: sumber 1080p atau lebih besar biasanya tetap layak di 4K; sumber yang sangat kecil tetap akan terlihat lembut. Tidak ada AI dalam prosesnya.',
+    sectionNo: '',
+    title: 'Checklist unggah PNGTree',
+    body: 'Sebelum mengunggah, zip4k memberi kontributor paket yang deterministik: komposisi 16:9 terpotong di tengah, PNG tepat 3840 × 2160, satu ZIP per gambar, dan pemrosesan lokal tanpa akun atau AI. Sampling Lanczos menjaga tepi tetap bersih; tidak mengarang detail, jadi periksa resolusi sumber sebelum mengirim.',
   },
   footer: {
-    note: 'zip4k adalah alat independen untuk kontributor stok. Tidak berafiliasi dengan PNGTree.',
+    note: 'zip4k adalah alat independen untuk kontributor PNGTree. Tidak berafiliasi dengan PNGTree.',
+    openSourcePrefix: 'Open source · MIT · Dikembangkan oleh ',
+    githubRepoHref: 'https://github.com/oelxyz/zip4k',
+    githubRepoLabel: 'GitHub repo',
+    openSourceSeparator: ' · ',
+    githubProfileHref: 'https://github.com/oelxyz',
+    githubProfileLabel: '@oelxyz',
+    credit: 'Tipografi: Fraunces · Literata · Plus Jakarta Sans',
     meta: ['3840 × 2160', 'PNG', 'ZIP per gambar'],
-    blogHref: '/id/blog/',
-    blogLabel: 'Blog',
   },
 };

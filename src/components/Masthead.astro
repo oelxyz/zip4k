@@ -5,11 +5,27 @@ interface Props {
   lang: Lang;
   homeLabel: string;
   note: string;
+  blogHref: string;
+  blogLabel: string;
   languageLabel: string;
+  themeLabel: string;
+  alternateHrefs?: Array<{ hreflang: string; href: string }>;
 }
 
-const { lang, homeLabel, note, languageLabel } = Astro.props;
+const { lang, homeLabel, note, blogHref, blogLabel, languageLabel, themeLabel, alternateHrefs = [] } = Astro.props;
 const homeHref = lang === 'id' ? '/id/' : '/';
+
+function relativeHref(href: string): string {
+  try {
+    const url = new URL(href);
+    return url.pathname + url.search + url.hash;
+  } catch {
+    return href;
+  }
+}
+
+const enHref = alternateHrefs.find((alternate) => alternate.hreflang === 'en')?.href;
+const idHref = alternateHrefs.find((alternate) => alternate.hreflang === 'id')?.href;
 ---
 
 <header class="masthead shell">
@@ -17,10 +33,11 @@ const homeHref = lang === 'id' ? '/id/' : '/';
     >zip4k<span class="brand-dot" aria-hidden="true"></span></a
   >
   <p class="brand-note">{note}</p>
+  <a class="masthead-link" href={blogHref}>{blogLabel}</a>
   <nav class="lang-switch" aria-label={languageLabel}>
     {
       lang === 'id' ? (
-        <a href="/" hreflang="en" lang="en">
+        <a href={enHref ? relativeHref(enHref) : '/'} hreflang="en" lang="en">
           EN
         </a>
       ) : (
@@ -31,10 +48,53 @@ const homeHref = lang === 'id' ? '/id/' : '/';
       lang === 'id' ? (
         <span aria-current="true">ID</span>
       ) : (
-        <a href="/id/" hreflang="id" lang="id">
+        <a href={idHref ? relativeHref(idHref) : '/id/'} hreflang="id" lang="id">
           ID
         </a>
       )
     }
   </nav>
+  <button class="theme-toggle" type="button" data-theme-toggle aria-label={themeLabel}>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1Z"></path>
+    </svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4.2"></circle>
+      <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"></path>
+    </svg>
+  </button>
 </header>
+
+<script>
+  (() => {
+    try {
+      const saved = localStorage.getItem('zip4k:tema');
+      const system = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme =
+        saved === 'dark' || saved === 'light' ? saved : system;
+    } catch {
+      /* keep light mode as fallback */
+    }
+  })();
+</script>
+
+<script>
+  document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('zip4k:tema', next);
+    } catch {
+      /* storage unavailable */
+    }
+  });
+
+  const masthead = document.querySelector('.masthead');
+
+  if (masthead) {
+    const update = () => masthead.classList.toggle('is-scrolled', window.scrollY > 8);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  }
+</script>

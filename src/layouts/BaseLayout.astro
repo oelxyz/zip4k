@@ -40,6 +40,8 @@ const ogImage = new URL('/og.png', SITE_URL).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f8f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111713" media="(prefers-color-scheme: dark)" />
     <title>{seo.title}</title>
     <meta name="description" content={seo.description} />
     <meta name="theme-color" content="#f6f2e9" />
@@ -51,6 +53,28 @@ const ogImage = new URL('/og.png', SITE_URL).href;
       ))
     }
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      as="style"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem('zip4k:tema');
+          const system = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          document.documentElement.dataset.theme =
+            saved === 'dark' || saved === 'light' ? saved : system;
+        } catch {}
+      })();
+    </script>
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="zip4k" />
@@ -79,7 +103,7 @@ const ogImage = new URL('/og.png', SITE_URL).href;
   </head>
   <body>
     <a class="skip-link" href={skipHref}>{skipLabel}</a>
-    <Masthead lang={lang} {...masthead} />
+    <Masthead lang={lang} {...masthead} alternateHrefs={alternates} />
     <main id="main-content">
       <slot />
     </main>

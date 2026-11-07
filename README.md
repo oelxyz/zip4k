@@ -1,8 +1,8 @@
 # zip4k
 
-A small batch utility for stock contributors. It center-crops landscape images to 16:9, resizes them to exactly 3840 × 2160, exports PNG, and packages each image in its own ZIP.
+An independent batch utility for PNGTree contributors. It center-crops landscape images to 16:9, resizes them to exactly 3840 × 2160, exports PNG, and packages each image in its own ZIP for upload to PNGTree. zip4k is not an official PNGTree tool and is not affiliated with PNGTree.
 
-Everything runs in the browser. Images are never uploaded, and there is no AI in the pipeline — just the browser's high-quality interpolation.
+Everything runs in the browser. Images are never uploaded, and there is no AI in the pipeline — it uses WebGL2 Lanczos resampling and optional light sharpening, with Canvas 2D as fallback.
 
 ## Features
 
@@ -37,7 +37,7 @@ Requires Node.js 22.23.4 or newer (Node 24 recommended).
 - `src/layouts/BaseLayout.astro` — document shell, SEO, hreflang, JSON-LD
 - `src/data/` — English/Indonesian copy and site constants
 - `src/scripts/` — client-side queue, image pipeline, UI strings
-- `src/styles/global.css` — light editorial theme
+- `src/styles/global.css` — sage/forest theme matching the owner's Ngalam + IkanGuppy identity (Fraunces, Literata, Plus Jakarta Sans), light/dark mode
 - `src/content/blog/{en,id}/` — Markdown posts
 - `public/` — favicon, OG image, robots.txt, Cloudflare `_headers`
 
