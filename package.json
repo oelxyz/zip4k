@@ -3,7 +3,33 @@
   "private": true,
   "license": "MIT",
   "version": "0.1.0",
+  "description": "Independent batch utility for PNGTree contributors: center-crop landscape images to 16:9, resize to exact 3840×2160 PNG, and package one ZIP per image. Client-side only, no upload, no AI.",
   "type": "module",
+  "homepage": "https://zip4k.pages.dev",
+  "bugs": {
+    "url": "https://github.com/oelxyz/zip4k/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "oelxyz",
+    "url": "https://github.com/oelxyz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oelxyz/zip4k.git"
+  },
+  "keywords": [
+    "pngtree",
+    "image-processing",
+    "batch-resize",
+    "astro",
+    "typescript",
+    "webgl",
+    "lanczos",
+    "zip",
+    "cloudflare-pages",
+    "open-source"
+  ],
   "engines": {
     "node": ">=22.23.4"
   },
